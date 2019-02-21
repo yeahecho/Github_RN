@@ -28,22 +28,22 @@ const MainNavigator = createStackNavigator({
   DetailPage: {
     screen: DetailPage,
     navigationOptions: {
-      header: null //隐藏navigationbar
+      // header: null //隐藏navigationbar
     }
   }
 });
 
-const AppNavigator = createSwitchNavigator(
-  {
-    Init: InitNavigator,
-    Main: MainNavigator
-  },
-  {
-    defaultNavigationOptions: {
-      header: null
-    }
-  }
-);
+// const AppNavigator = createSwitchNavigator(
+//   {
+//     Init: InitNavigator,
+//     Main: MainNavigator
+//   },
+//   {
+//     defaultNavigationOptions: {
+//       header: null
+//     }
+//   }
+// );
 
 // const AppContainer = createAppContainer(AppNavigator);
 // // const AppContainer = createAppContainer(InitNavigator);
