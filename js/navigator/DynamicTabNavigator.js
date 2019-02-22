@@ -72,7 +72,7 @@ export default class DynamicTabNavigator extends Component<Props> {
 
   _tabNavigator() {
     const { PopularPage, TrendingPage, FavoritePage, MyPage } = TABS;
-    const tabs = { PopularPage, FavoritePage, MyPage }; //根据需要显示想要的tab
+    const tabs = { PopularPage, TrendingPage, FavoritePage, MyPage }; //根据需要显示想要的tab
 
     PopularPage.navigationOptions.tabBarLabel = 'Popular'; //给底部标签改名
     return createBottomTabNavigator(tabs, { tabBarComponent: TabBarComponent });
@@ -90,7 +90,7 @@ class TabBarComponent extends React.Component {
     super(props);
     this.theme = {
       tintColor: this.props.activeTintColor,
-      updateTime: new Date().getTime()
+      updateTime: new Date().getTime() //取标志位
     };
   }
 
@@ -98,6 +98,7 @@ class TabBarComponent extends React.Component {
     const { routes, index } = this.props.navigation.state;
     if (routes[index].params) {
       const { theme } = routes[index].params;
+      //以最新的更新时间为主，防止被其他tab之前的修改覆盖掉
       if (theme && theme.updateTime > this.theme.updateTime) {
         this.theme = theme;
       }
