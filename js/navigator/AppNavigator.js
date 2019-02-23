@@ -1,9 +1,6 @@
 import {
   createStackNavigator,
-  createMaterialTopTabNavigator,
-  createBottomTabNavigator,
   createSwitchNavigator,
-  createNavigationContainer,
   createAppContainer
 } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -16,6 +13,8 @@ import HomePage from '../page/HomePage';
 import DetailPage from '../page/DetailPage';
 import FetchDemoPage from '../page/FetchDemoPage';
 import AsyncStorageDemoPage from '../page/AsyncStorageDemoPage';
+import DataStoreDemoPage from '../page/DataStoreDemoPage';
+
 export const rootCom = 'Init'; //设置根路由
 
 const InitNavigator = createStackNavigator({
@@ -47,6 +46,12 @@ const MainNavigator = createStackNavigator({
   },
   AsyncStorageDemoPage: {
     screen: AsyncStorageDemoPage,
+    navigationOptions: {
+      // header: null //隐藏navigationbar
+    }
+  },
+  DataStoreDemoPage: {
+    screen: DataStoreDemoPage,
     navigationOptions: {
       // header: null //隐藏navigationbar
     }
