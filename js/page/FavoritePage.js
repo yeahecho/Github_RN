@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import actions from '../action/index';
+import {
+  createMaterialTopTabNavigator,
+  createAppContainer
+} from 'react-navigation';
+import NavigationUtil from '../navigator/NavigationUtil';
 
 type Props = {};
 class FavoritePage extends Component<Props> {
@@ -13,6 +18,33 @@ class FavoritePage extends Component<Props> {
           title="change theme color"
           onPress={() => {
             this.props.onThemeChange('#505');
+          }}
+        />
+        <Button
+          title={'Fetch usage'}
+          onPress={() => {
+            NavigationUtil.goPage(
+              { navigation: this.props.navigation },
+              'FetchDemoPage'
+            );
+          }}
+        />
+        <Button
+          title={'AsyncStorage usage'}
+          onPress={() => {
+            NavigationUtil.goPage(
+              { navigation: this.props.navigation },
+              'AsyncStorageDemoPage'
+            );
+          }}
+        />
+        <Button
+          title={'DataStore usage离线缓存框架'}
+          onPress={() => {
+            NavigationUtil.goPage(
+              { navigation: this.props.navigation },
+              'DataStoreDemoPage'
+            );
           }}
         />
       </View>
