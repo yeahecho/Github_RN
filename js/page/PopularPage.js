@@ -12,6 +12,7 @@ import {
   createAppContainer
 } from 'react-navigation';
 import NavigationUtil from '../navigator/NavigationUtil';
+import PopularItem from '../common/PopularItem';
 import actions from '../action/index';
 import { connect } from 'react-redux';
 
@@ -85,6 +86,7 @@ class PopularTab extends Component<Props> {
   }
   renderItem(data) {
     const item = data.item;
+    // return <PopularItem item={item} onSelect={() => {}} />;
     return (
       <View style={{ marginBottom: 10 }}>
         <Text style={{ backgroundColor: '#faa' }}>{JSON.stringify(item)}</Text>
