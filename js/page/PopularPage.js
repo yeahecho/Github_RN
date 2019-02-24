@@ -86,12 +86,12 @@ class PopularTab extends Component<Props> {
   }
   renderItem(data) {
     const item = data.item;
-    // return <PopularItem item={item} onSelect={() => {}} />;
-    return (
-      <View style={{ marginBottom: 10 }}>
-        <Text style={{ backgroundColor: '#faa' }}>{JSON.stringify(item)}</Text>
-      </View>
-    );
+    return <PopularItem item={item} onSelect={() => {}} />;
+    // return (
+    //   <View style={{ marginBottom: 10 }}>
+    //     <Text style={{ backgroundColor: '#faa' }}>{JSON.stringify(item)}</Text>
+    //   </View>
+    // );
   }
   render() {
     const { popular } = this.props;

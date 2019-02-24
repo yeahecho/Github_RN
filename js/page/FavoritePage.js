@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import actions from '../action/index';
-import {
-  createMaterialTopTabNavigator,
-  createAppContainer
-} from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation';
 import NavigationUtil from '../navigator/NavigationUtil';
 
 type Props = {};

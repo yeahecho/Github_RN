@@ -18,6 +18,7 @@ export default class DataStoreDemoPage extends Component<Props> {
     this.dataStore
       .fetchData(url)
       .then(data => {
+        let newDate = new Date(data.timestamp);
         let showData = `初次数据加载时间：${new Date(
           data.timestamp
         )}\n${JSON.stringify(data.data)}`;
