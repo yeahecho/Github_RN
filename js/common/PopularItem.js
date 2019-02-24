@@ -38,6 +38,7 @@ export default class PopularItem extends Component {
             {favoriteButton}
           </View>
         </View>
+        //{' '}
       </TouchableOpacity>
     );
   }
