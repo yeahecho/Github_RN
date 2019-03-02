@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import theme from './theme';
 import popular from './popular';
+import trending from './trending';
 import { rootCom, RootNavigator } from '../navigator/AppNavigator';
 
 //1.指定默认state
@@ -13,7 +14,7 @@ const navState = RootNavigator.router.getStateForAction(
  */
 const navReducer = (state = navState, action) => {
   const nextState = RootNavigator.router.getStateForAction(action, state);
-  //如果`nextState`为null或未定义，只需返回原始`state`
+  // 如果`nextState`为null或未定义，只需返回原始`state`
   return nextState || state;
 };
 
@@ -24,7 +25,8 @@ const navReducer = (state = navState, action) => {
 const index = combineReducers({
   nav: navReducer,
   theme: theme,
-  popular: popular
+  popular: popular,
+  trending: trending
 });
 
 export default index;
