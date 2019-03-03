@@ -64,7 +64,7 @@ export function onLoadMorePopular(
           error: 'no more',
           storeName: storeName,
           pageIndex: --pageIndex,
-          projectModes: dataArray
+          projectModels: dataArray
         });
       } else {
         //本次和载入的最大数量
@@ -76,7 +76,7 @@ export function onLoadMorePopular(
           type: Types.POPULAR_LOAD_MORE_SUCCESS,
           storeName,
           pageIndex,
-          projectModes: dataArray.slice(0, max)
+          projectModels: dataArray.slice(0, max)
         });
       }
     }, 500);

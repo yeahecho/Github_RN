@@ -198,7 +198,7 @@ class TrendingTab extends Component<Props> {
       store = {
         items: [],
         isLoading: false,
-        projectModes: [], //要显示的数据
+        projectModels: [], //要显示的数据
         hideLoadingMore: true //默认隐藏加载更多
       };
     }
@@ -211,7 +211,19 @@ class TrendingTab extends Component<Props> {
 
   renderItem(data) {
     const item = data.item;
-    return <TrendingItem item={item} onSelect={() => {}} />;
+    return (
+      <TrendingItem
+        item={item}
+        onSelect={() => {
+          NavigationUtil.goPage(
+            {
+              projectModel: item
+            },
+            'DetailPage'
+          );
+        }}
+      />
+    );
   }
 
   genIndicator() {
@@ -222,13 +234,12 @@ class TrendingTab extends Component<Props> {
       </View>
     );
   }
-
   render() {
     let store = this._store();
     return (
       <View style={styles.container}>
         <FlatList
-          data={store.projectModes}
+          data={store.projectModels}
           renderItem={data => this.renderItem(data)}
           keyExtractor={item => '' + (item.id || item.fullName)}
           refreshControl={

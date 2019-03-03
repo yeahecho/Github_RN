@@ -35,7 +35,7 @@ const MainNavigator = createStackNavigator({
   DetailPage: {
     screen: DetailPage,
     navigationOptions: {
-      // header: null //隐藏navigationbar
+      header: null //隐藏navigationbar
     }
   },
   FetchDemoPage: {

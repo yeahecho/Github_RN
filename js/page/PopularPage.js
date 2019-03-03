@@ -126,7 +126,7 @@ class PopularTab extends Component<Props> {
       store = {
         items: [],
         isLoading: false,
-        projectModes: [], //要显示的数据
+        projectModels: [], //要显示的数据
         hideLoadingMore: true //默认隐藏加载更多
       };
     }
@@ -137,7 +137,19 @@ class PopularTab extends Component<Props> {
   }
   renderItem(data) {
     const item = data.item;
-    return <PopularItem item={item} onSelect={() => {}} />;
+    return (
+      <PopularItem
+        item={item}
+        onSelect={() => {
+          NavigationUtil.goPage(
+            {
+              projectModel: item
+            },
+            'DetailPage'
+          );
+        }}
+      />
+    );
     // return (
     //   <View style={{ marginBottom: 10 }}>
     //     <Text style={{ backgroundColor: '#faa' }}>{JSON.stringify(item)}</Text>
@@ -157,9 +169,9 @@ class PopularTab extends Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={store.projectModes}
+          data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => '' + item.id}
+          keyExtractor={item => '' + item.id || item.fullName}
           refreshControl={
             <RefreshControl
               title={'Loading'}

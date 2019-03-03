@@ -14,14 +14,22 @@ import actions from '../action';
 import { BackHandler } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import connect from 'react-redux/es/connect/connect';
+import BackPressCompent from '../common/BackPressComponent';
 
 type Props = {};
 class HomePage extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.backPress = new BackPressCompent({ backPress: this.onBackPress() });
+  }
+
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    // BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+    this.backPress.componentDidMount();
   }
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    // BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    this.backPress.componentWillUnmount();
   }
   /**
    * 处理Android 中的物理返回键

@@ -18,7 +18,7 @@ export function handleData(actionType, dispatch, storeName, data, pageSize) {
   dispatch({
     type: actionType,
     items: fixItems,
-    projectModes:
+    projectModels:
       pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize), //第一次要加载的数据
     storeName,
     pageIndex: 1
