@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-  Image
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-export default class PopularItem extends Component {
+import BaseItem from './BaseItem';
+const THEME_COLOR = '#678';
+export default class PopularItem extends BaseItem {
   render() {
-    const { item } = this.props;
+    const { projectModel } = this.props;
+    const { item } = projectModel;
     if (!item || !item.owner) return null;
-    let favoriteButton = (
-      <TouchableOpacity
-        style={{ padding: 6 }}
-        onPress={() => {}}
-        underlayColor={'transfarent'}
-      >
-        <FontAwesome name={'star-o'} size={26} style={{ color: 'red' }} />
-      </TouchableOpacity>
-    );
     return (
-      // <Text>test</Text>
-      <TouchableOpacity onPress={this.props.onSelect}>
+      <TouchableOpacity onPress={() => this.onItemClick()}>
         <View style={styles.cell_container}>
           <Text style={styles.title}>{item.full_name}</Text>
           <Text style={styles.description}>{item.description}</Text>
@@ -39,10 +24,10 @@ export default class PopularItem extends Component {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <Text>Start</Text>
+              <Text>Start:</Text>
               <Text>{item.stargazers_count}</Text>
             </View>
-            {favoriteButton}
+            {this._favoriteIcon()}
           </View>
         </View>
       </TouchableOpacity>
@@ -59,11 +44,11 @@ const styles = StyleSheet.create({
     borderColor: '#dddddd',
     borderWidth: 0.5,
     borderRadius: 2,
-    shadowColor: 'gray', //shadow针对iOS阴影
+    shadowColor: 'gray',
     shadowOffset: { width: 0.5, height: 0.5 },
     shadowOpacity: 0.4,
     shadowRadius: 1,
-    elevation: 2 //Android阴影
+    elevation: 2
   },
   row: {
     justifyContent: 'space-between',

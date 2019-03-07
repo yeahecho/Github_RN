@@ -1,15 +1,16 @@
 import Types from '../types';
 import DataStore, { FLAG_STORAGE } from '../../expand/dao/DataStore';
-import { handleData } from '../ActionUtil';
+import { handleData, _projectModels } from '../ActionUtil';
 
 /**
  * 获取最热数据的异步action
  * @param storeName
  * @param url
  * @param pageSize
+ * @param favoriteDao
  * @returns {function(*=)}
  */
-export function onRefreshPopular(storeName, url, pageSize) {
+export function onRefreshPopular(storeName, url, pageSize, favoriteDao) {
   return dispatch => {
     dispatch({ type: Types.POPULAR_REFRESH, storeName: storeName });
     let dataStore = new DataStore();
@@ -21,7 +22,8 @@ export function onRefreshPopular(storeName, url, pageSize) {
           dispatch,
           storeName,
           data,
-          pageSize
+          pageSize,
+          favoriteDao
         );
       })
       .catch(error => {
@@ -49,6 +51,7 @@ export function onLoadMorePopular(
   pageIndex,
   pageSize,
   dataArray = [],
+  favoriteDao,
   callBack
 ) {
   return dispatch => {
@@ -72,11 +75,13 @@ export function onLoadMorePopular(
           pageSize * pageIndex > dataArray.length
             ? dataArray.length
             : pageSize * pageIndex;
-        dispatch({
-          type: Types.POPULAR_LOAD_MORE_SUCCESS,
-          storeName,
-          pageIndex,
-          projectModels: dataArray.slice(0, max)
+        _projectModels(dataArray.slice(0, max), favoriteDao, data => {
+          dispatch({
+            type: Types.POPULAR_LOAD_MORE_SUCCESS,
+            storeName,
+            pageIndex,
+            projectModels: data
+          });
         });
       }
     }, 500);

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-  DeviceInfo,
   Modal,
-  ViewPropTypes,
-  StyleSheet,
   Text,
-  StatusBar,
+  TouchableOpacity,
+  StyleSheet,
   View,
   Platform,
-  TouchableOpacity
+  DeviceInfo
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import TimeSpan from '../model/TimeSpan';
@@ -18,21 +16,23 @@ export const TimeSpans = [
   new TimeSpan('本 周', 'since=weekly'),
   new TimeSpan('本 月', 'since=monthly')
 ];
-export default class NavigationBar extends Component {
-  //初始化state方式
+export default class TrendingDialog extends Component {
   state = {
     visible: false
   };
+
   show() {
     this.setState({
       visible: true
     });
   }
+
   dismiss() {
     this.setState({
       visible: false
     });
   }
+
   render() {
     const { onClose, onSelect } = this.props;
     return (
@@ -42,7 +42,7 @@ export default class NavigationBar extends Component {
         onRequestClose={() => onClose}
       >
         <TouchableOpacity
-          style={StyleSheet.container}
+          style={styles.container}
           onPress={() => this.dismiss()}
         >
           <MaterialIcons
@@ -54,6 +54,7 @@ export default class NavigationBar extends Component {
             {TimeSpans.map((result, i, arr) => {
               return (
                 <TouchableOpacity
+                  key={i}
                   onPress={() => onSelect(arr[i])}
                   underlayColor="transparent"
                 >

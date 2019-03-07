@@ -21,12 +21,16 @@ import PopularItem from '../common/PopularItem';
 import Toast from 'react-native-easy-toast';
 import NavigationBar from '../common/NavigationBar';
 import TrendingItem from '../common/TrendingItem';
+import FavoriteDao from '../expand/dao/FavoriteDao';
+import { FLAG_STORAGE } from '../expand/dao/DataStore';
+import FavoriteUtil from '../util/FavoriteUtil';
 import TrendingDialog, { TimeSpans } from '../common/TrendingDialog';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE';
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '&sort=stars';
 const THEME_COLOR = '#678';
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending);
 type Props = {};
 export default class TrendingPage extends Component<Props> {
   constructor(props) {
@@ -177,12 +181,13 @@ class TrendingTab extends Component<Props> {
         ++store.pageIndex,
         pageSize,
         store.items,
+        favoriteDao,
         callback => {
           this.refs.toast.show('没有更多了');
         }
       );
     } else {
-      onRefreshTrending(this.storeName, url, pageSize);
+      onRefreshTrending(this.storeName, url, pageSize, favoriteDao);
     }
   }
 
@@ -213,7 +218,7 @@ class TrendingTab extends Component<Props> {
     const item = data.item;
     return (
       <TrendingItem
-        item={item}
+        projectModel={item}
         onSelect={() => {
           NavigationUtil.goPage(
             {
@@ -222,6 +227,14 @@ class TrendingTab extends Component<Props> {
             'DetailPage'
           );
         }}
+        onFavorite={(item, isFavorite) =>
+          FavoriteUtil.onFavorite(
+            favoriteDao,
+            item,
+            isFavorite,
+            FLAG_STORAGE.flag_trending
+          )
+        }
       />
     );
   }
@@ -241,7 +254,7 @@ class TrendingTab extends Component<Props> {
         <FlatList
           data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => '' + (item.id || item.fullName)}
+          keyExtractor={item => '' + item.item.id}
           refreshControl={
             <RefreshControl
               title={'Loading'}
@@ -280,15 +293,23 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   //将 dispatch(onRefreshPopular(storeName, url))绑定到props
-  onRefreshTrending: (storeName, url, pageSize) =>
-    dispatch(actions.onRefreshTrending(storeName, url, pageSize)),
-  onLoadMoreTrending: (storeName, pageIndex, pageSize, items, callBack) =>
+  onRefreshTrending: (storeName, url, pageSize, favoriteDao) =>
+    dispatch(actions.onRefreshTrending(storeName, url, pageSize, favoriteDao)),
+  onLoadMoreTrending: (
+    storeName,
+    pageIndex,
+    pageSize,
+    items,
+    favoriteDao,
+    callBack
+  ) =>
     dispatch(
       actions.onLoadMoreTrending(
         storeName,
         pageIndex,
         pageSize,
         items,
+        favoriteDao,
         callBack
       )
     )
