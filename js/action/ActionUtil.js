@@ -4,11 +4,12 @@
  * @param dispatch
  * @param storeName
  * @param data
- * @param favoriteDao
  * @param pageSize
+ * @param favoriteDao
  */
 import ProjectModel from '../model/ProjectModel';
 import Utils from '../util/Utils';
+
 export function handleData(
   actionType,
   dispatch,
@@ -32,16 +33,24 @@ export function handleData(
     dispatch({
       type: actionType,
       items: fixItems,
-      projectModels: projectModels, //第一次要加载的数据
+      projectModels: projectModels,
       storeName,
       pageIndex: 1
     });
   });
 }
+
+/**
+ * 通过本地的收藏状态包装Item
+ * @param showItems
+ * @param favoriteDao
+ * @param callback
+ * @returns {Promise<void>}
+ * @private
+ */
 export async function _projectModels(showItems, favoriteDao, callback) {
   let keys = [];
   try {
-    //用async和await，异步转同步
     //获取收藏的key
     keys = await favoriteDao.getFavoriteKeys();
   } catch (e) {
